@@ -8,7 +8,7 @@
 ModuleToProcess = '.\Dock-PS.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1'
+ModuleVersion = '1.2'
 
 # ID used to uniquely identify this module
 GUID = '6f0e21d4-cd97-464b-aa6d-a53cc99c5614'
@@ -97,10 +97,10 @@ PrivateData = @{
         ProjectUri = 'https://github.com/GeeLaw/PowerShellThingies/tree/master/modules/Dock-PS'
 
         # A URL to an icon representing this module.
-        IconUri = 'https://cdn.rawgit.com/GeeLaw/PowerShellThingies/master/modules/Dock-PS/logo.png'
+        IconUri = 'https://raw.githubusercontent.com/GeeLaw/PowerShellThingies/master/modules/Dock-PS/logo.png'
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Migrate project to another repository.'
+        ReleaseNotes = 'Migrate project to another repository. Fix logo.'
 
     } # End of PSData hashtable
 
