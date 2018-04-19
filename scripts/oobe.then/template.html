@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html class="gl-page-background" lang="<!--[blog][meta]Culture[blog]-->">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Language" content="en-GB" />
+    <title>Packages</title>
+    <meta name="SKYPE_TOOLBAR" content="SKYPE_TOOLBAR_PARSER_COMPATIBLE" />
+    <meta name="IE_RM_OFF" content="true" />
+    <meta name="format-detection" content="telephone=no" />
+    <style type="text/css">
+        body.noscript > #main, body.loaded > #scripthint { display: none; }
+        #scripthint { font-size: 2em; }
+        html { font-family: sans-serif; }
+        #summary.dirty { display: none; }
+        #summary { font-family: Consolas, 'Courier New', Courier, monospace; }
+        table { border-collapse: collapse; }
+        table thead { font-weight: bold; }
+        table td { border: 1px solid; }
+    </style>
+</head>
+<body class="noscript">
+<div id="scripthint">You need to enable JavaScript to use this page.</div>
+<div id="main">
+<h1 id="header">Packages</h1>
+<div><table>
+    <thead><tr><td>REMOVE?</td><td>Name</td><td>Publisher (Id)</td><td>Package (Family) Name</td></tr></thead>
+    <tbody id="packages"></tbody>
+</table></div>
+<div><button id="report">Create summary</button></div>
+<div><textarea id="summary" class="dirty" readonly="true" cols="40"></textarea></div>
+</div>
+<script type="text/javascript">
+(function (hash, packageType, packageData)
+{
+    var header = document.getElementById('header');
+    var report = document.getElementById('report');
+    var summary = document.getElementById('summary');
+    var packageTable = document.getElementById('packages');
+    document.title += ' (' + packageType + ')';
+    header.innerText += ' (' + packageType + ')';
+    var choiceChangedHandler = function (dataObject, checkBox)
+    {
+        return (function ()
+        {
+            dataObject.ShouldRemove = checkBox.checked;
+            summary.className = 'dirty';
+        });
+    };
+    for (var i = 0; i < packageData.length; ++i)
+    {
+        var obj = packageData[i];
+        var trElm = document.createElement('tr');
+        var checkRm = document.createElement('input');
+        var tdRm = document.createElement('td');
+        var aName = document.createElement('a');
+        var tdName = document.createElement('td');
+        var tdPub = document.createElement('td');
+        var tdPFN = document.createElement('td');
+        checkRm.type = 'checkbox';
+        checkRm.onchange = choiceChangedHandler(obj, checkRm);
+        tdRm.appendChild(checkRm);
+        aName.innerText = obj.Name || obj.DisplayName;
+        if (obj.PackageFamilyName != null)
+        {
+            aName.href = 'ms-windows-store://pdp/?PFN=' + obj.PackageFamilyName;
+            aName.target = '_blank';
+        }
+        tdName.appendChild(aName);
+        tdPub.innerText = obj.Publisher || obj.PublisherId;
+        tdPFN.innerText = obj.PackageFamilyName || obj.PackageName;
+        trElm.appendChild(tdRm);
+        trElm.appendChild(tdName);
+        trElm.appendChild(tdPub);
+        trElm.appendChild(tdPFN);
+        packageTable.appendChild(trElm);
+    }
+    report.onclick = function ()
+    {
+        var smry = hash;
+        for (var i = 0; i < packageData.length; ++i)
+        {
+            if (packageData[i].ShouldRemove)
+            {
+                smry += ',' + i.toString();
+            }
+        }
+        summary.value = smry;
+        summary.className = '';
+        summary.focus();
+        summary.select();
+    };
+    window.onbeforeunload = function (e)
+    {
+        if (summary.classList.contains('dirty'))
+        {
+            e = e || {};
+            var dlgText = 'You have not created a summary since last edit. If you leave, you will lose the changes.'
+            e.dialogText = dlgText;
+            return dlgText;
+        }
+        return undefined;
+    };
+    document.body.className = 'loaded';
+})(/*9a841860c8724172918b13b6418d1fae*/);
+</script>
+</body>
+</html>
