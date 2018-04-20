@@ -128,7 +128,7 @@ Process
             Write-Verbose "Current registered owner is $regUserName.";
             Write-Verbose 'To leave the setting untouched, enter nothing.';
             Write-Verbose 'Non-empty input will set RegisteredOwner.';
-            Write-Verbose 'The first question mark will be remove, so that "?" sets it to "".';
+            Write-Verbose 'The first question mark will be removed, so that "?" sets it to "".';
             $regUserName = Read-Host 'Enter your choice';
             If ($regUserName -ne '')
             {
