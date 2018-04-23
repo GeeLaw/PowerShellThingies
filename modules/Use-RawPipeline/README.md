@@ -6,11 +6,12 @@ This module provides better raw pipeline than PowerShell 5.
 
 ## TL;DR
 
-| Redirect | bash | Powershell (with Use-RawPipeline) |
-| --- | --- | --- |
-| stdin | `git commit-tree 01d1 -p HEAD < msg` | `stdin msg \| run git commit-tree 01d1 -p HEAD \| 2ps` |
-| stdout | `git show HEAD:README.md > temp` | `run git show HEAD:README.md \| out2 temp` |
-| stdout | `git cat-file blob b428 >> temp` | `run git cat-file blob b428 \| add2 temp` |
+| bash | Powershell (with Use-RawPipeline) |
+| --- | --- |
+| `git commit-tree 01d1 -p HEAD < msg` | `stdin msg \| run git commit-tree 01d1 -p HEAD \| 2ps` |
+| `git show HEAD:README.md > temp` | `run git show HEAD:README.md \| out2 temp` |
+| `git cat-file blob b428 >> temp` | `run git cat-file blob b428 \| add2 temp` |
+| `git cat-file bloc b428 \| xxd` | `run git cat-file blob b428 \| run xxd \| 2ps` |
 
 Note: *DO NOT* use `run CMD ...` *without* a following `| 2ps`, `| out2 ...`, or `| add2 ...`. Otherwise, CMD won't be executed.
 
