@@ -12,7 +12,7 @@
 RootModule = '.\CommonUtilities.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.1'
+ModuleVersion = '1.2'
 
 # ID used to uniquely identify this module
 GUID = '734adda8-02a2-42c6-a4f0-99d057fb22f0'
@@ -66,16 +66,16 @@ ScriptsToProcess = @('.\CommonUtilities.prepare.ps1')
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = @('New-Password', 'Switch-User', 'Sign-Scripts', 'Restart-Host', 'Set-FastCredential', 'Get-FastCredential', 'Remove-FastCredential')
+FunctionsToExport = @('New-Password', 'Switch-User', 'Sign-Scripts', 'Restart-Host', 'Set-FastCredential', 'Get-FastCredential', 'Remove-FastCredential', 'Out-TextEditor')
 
 # Cmdlets to export from this module
 CmdletsToExport = @()
 
 # Variables to export from this module
-VariablesToExport = @()
+VariablesToExport = @('OutTextEditorPreference')
 
 # Aliases to export from this module
-AliasesToExport = @('newpwd', 'su', 'sign', 'restart')
+AliasesToExport = @('newpwd', 'su', 'sign', 'restart', 'ovsc')
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()
@@ -104,7 +104,7 @@ PrivateData = @{
         IconUri = 'https://raw.githubusercontent.com/GeeLaw/PowerShellThingies/master/modules/CommonUtilities/logo.png'
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Migrate to another repository. Add FastCredential series and Restart-Host.'
+        ReleaseNotes = 'Adds Out-TextEditor.'
 
     } # End of PSData hashtable
 

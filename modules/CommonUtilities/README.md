@@ -26,3 +26,8 @@ Install-Module -Name CommonUtilities -Scope CurrentUser;
 | [Switch-User](Switch-User.md) | su | A better ‘Run PowerShell as Administrator’ and ‘Run PowerShell as another user’. |
 | Restart-Host | restart | Restarts PowerShell. |
 | [Get/Set/Remove-FastCredential](FastCredential.md) | (N/A) | Commands related to managing saved credentials. |
+| [Out-TextEditor](Out-TextEditor.md) | `ovsc` | Sends the output to a temporary text file and opens it in a text editor. |
+
+## Variable
+
+The module exports `$OutTextEditorPreference` variable, which is a `ScriptBlock` with the same syntax as that of `EditorCommand` of `Out-TextEditor` advanced function.

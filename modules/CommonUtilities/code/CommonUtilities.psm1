@@ -668,4 +668,163 @@ Function Remove-FastCredential
     }
 }
 
-Export-ModuleMember -Function @('New-Password', 'Switch-User', 'Sign-Scripts', 'Restart-Host', 'Set-FastCredential', 'Get-FastCredential', 'Remove-FastCredential') -Alias @('newpwd', 'su', 'sign', 'restart') -Cmdlet @() -Variable @();
+[ScriptBlock]$OutTextEditorPreference = {
+    If ([System.Linq.Enumerable]::Any($_, [char].GetMethod('IsWhiteSpace', [type[]]@([char])).CreateDelegate([System.Func[char, bool]])))
+    {
+        $_ = '"' + $_ + '"';
+    }
+    Start-Process -FilePath 'code' -ArgumentList @($_) -NoNewWindow;
+};
+
+<#
+.SYNOPSIS
+    Sends output to a temporary text file and opens a text editor.
+
+.DESCRIPTION
+    The Out-TextEditor advanced function sends output to a temporary text file and opens a text editor (Visual Studio Code by default). Using a text editor allows you to do advanced searching and editing to the textual representation of the input object(s).
+
+    It is important to note that this advanced function is intended to be used interactively or at least in a GUI fashion. The format of output (especially the header style) is subject to change and you should NOT depend on the specific styling found in any version of the advanced function.
+
+.PARAMETER InputObject
+    Specifies the objects to be written to the file. Accepts values from the pipeline.
+
+.PARAMETER Encoding
+    Specifies the type of character encoding used in the file. This parameter accepts the same set of values accepted by Out-File. If unspecified, the encoding is up to Out-File.
+
+.PARAMETER Width
+    Specifies the number of characters in each line of output. Any additional characters are truncated, not wrapped. If you omit this parameter, the width is determined by Out-File.
+
+.PARAMETER EditorCommand
+    Specifies how to open the text editor with a script block. The script block should accept pipeline item ($_ or $PSItem) that is supposed to be the full name of the temporary file. If you omit this parameter or it is $null, the value comes from $OutTextEditorPreference. The default value opens Visual Studio Code by running code <filename>. The name is quoted if it contains a white space.
+
+.PARAMETER NoHeader
+    Suppresses the header. By default, the advanced function prints the line of command ($MyInvocation.Line) to the first line of the file, and a fence in the following line. If this switch is on, the header is suppressed.
+
+    You must NOT supply both NoHeader switch and Header parameter.
+
+.PARAMETER Header
+    Specifies a custom header. Supplying this parameter replaces the default header.
+
+    You must NOT supply both NoHeader switch and Header parameter.
+
+.PARAMETER PassThru
+    Pipes the input downstream. By default, input objects are eaten and not piped.
+
+.LINK
+    https://github.com/GeeLaw/PowerShellThingies/blob/master/modules/CommonUtilities/Out-TextEditor.md
+#>
+Function Out-TextEditor
+{
+    [CmdletBinding(DefaultParameterSetName = 'DefaultHeader', PositionalBinding = $False)]
+    [Alias('ovsc')]
+    Param
+    (
+        [Parameter(Mandatory = $False, ValueFromPipeline = $True, ParameterSetName = 'DefaultHeader')]
+        [Parameter(Mandatory = $False, ValueFromPipeline = $True, ParameterSetName = 'CustomHeader')]
+        [PSObject]$InputObject,
+        [Parameter(Mandatory = $False, ParameterSetName = 'DefaultHeader')]
+        [Parameter(Mandatory = $False, ParameterSetName = 'CustomHeader')]
+        [ValidateSet('Unknown', 'String', 'Unicode', 'BigEndianUnicode',
+            'UTF8', 'UTF7', 'UTF32', 'ASCII', 'Default', 'OEM')]
+        [string]$Encoding,
+        [Parameter(Mandatory = $False, ParameterSetName = 'DefaultHeader')]
+        [Parameter(Mandatory = $False, ParameterSetName = 'CustomHeader')]
+        [ValidateRange(2, [int]::MaxValue)]
+        [int]$Width,
+        [Parameter(Mandatory = $False, ParameterSetName = 'DefaultHeader')]
+        [Parameter(Mandatory = $False, ParameterSetName = 'CustomHeader')]
+        [ScriptBlock]$EditorCommand,
+        [Parameter(Mandatory = $False, ParameterSetName = 'DefaultHeader')]
+        [switch]$NoHeader,
+        [Parameter(Mandatory = $True, ParameterSetName = 'CustomHeader')]
+        [switch]$Header,
+        [Parameter(Mandatory = $False, ParameterSetName = 'DefaultHeader')]
+        [Parameter(Mandatory = $False, ParameterSetName = 'CustomHeader')]
+        [switch]$PassThru
+    )
+    Begin
+    {
+        [string]$TempFileName = [System.IO.Path]::Combine(
+            [System.IO.Path]::GetTempPath(),
+            [System.Guid]::NewGuid().ToString('n') + '.txt');
+        [System.Collections.Generic.List[System.Management.Automation.PSObject]]$InputObjects = [System.Collections.Generic.List[System.Management.Automation.PSObject]]::new();
+        New-Item -Path $TempFileName -ItemType 'File' | Out-Null;
+        [HashTable]$OutFileArgs = @{ 'FilePath' = $TempFileName; 'Append' = $True };
+        <# Value is empty string if not supplied. #>
+        If (-not [string]::IsNullOrWhiteSpace($Encoding))
+        {
+            $OutFileArgs['Encoding'] = $Encoding;
+        }
+        <# Value is 0 if not supplied. #>
+        If ($Width -ge 2)
+        {
+            $OutFileArgs['Width'] = $Width;
+        }
+        Else
+        {
+            $Width = 80 - 1;
+            Try
+            {
+                $Width = [System.Math]::Max(2, $Host.UI.RawUI.WindowSize.Width - 1);
+            }
+            Catch
+            {
+            }
+        }
+        If ($EditorCommand -eq $null)
+        {
+            $EditorCommand = $OutTextEditorPreference;
+        }
+        If ($EditorCommand -eq $null)
+        {
+            $local:noEditorError = [System.Management.Automation.ErrorRecord]::new(
+                [System.ArgumentNullException]::new('EditorCommand', 'Both EditorCommand parameter and $OutTextEditorPreference variable are null.'),
+                'NoEditorCommand',
+                [System.Management.Automation.ErrorCategory]::InvalidArgument,
+                $null
+            );
+            $PSCmdlet.WriteError($noEditorError);
+            Return;
+        }
+        If ($PSCmdlet.ParameterSetName -eq 'DefaultHeader')
+        {
+            If (-not $NoHeader)
+            {
+                @($MyInvocation.Line, ('-' * $Width)) | Out-File @OutFileArgs;
+            }
+        }
+        Else
+        {
+            @($Header, ('-' * $Width)) | Out-File @OutFileArgs;
+        }
+    }
+    Process
+    {
+        If ($EditorCommand -ne $null)
+        {
+            If ($InputObject -is [object[]])
+            {
+                $InputObjects.AddRange($InputObject);
+            }
+            Else
+            {
+                $InputObjects.Add($InputObject);
+            }
+        }
+        If ($PassThru)
+        {
+            $InputObject;
+        }
+    }
+    End
+    {
+        If ($EditorCommand -ne $null)
+        {
+            $OutFileArgs['InputObject'] = $InputObjects;
+            Out-File @OutFileArgs;
+            $TempFileName | ForEach-Object $EditorCommand | Out-Null;
+        }
+    }
+}
+
+Export-ModuleMember -Function @('New-Password', 'Switch-User', 'Sign-Scripts', 'Restart-Host', 'Set-FastCredential', 'Get-FastCredential', 'Remove-FastCredential', 'Out-TextEditor') -Alias @('newpwd', 'su', 'sign', 'restart', 'ovsc') -Cmdlet @() -Variable @('OutTextEditorPreference');
