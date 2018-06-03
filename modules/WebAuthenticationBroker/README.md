@@ -27,7 +27,7 @@ Specifies the initial URI to open. It must start with `http://` or `https://`.
 
 ### `CompletionExtractor`
 
-Specifies the completion extractor. The extractor should consume the URI using the pipeline variable $_, and should either return nothing (or `$null`), or something.
+Specifies the completion extractor. The extractor should consume the URI using the pipeline variable `$_`, and should either return nothing (or `$null`), or something.
 
 - GUI on: the extractor is called **after** each navigation of the hosted web browser.
 - GUI off: it is called after the user pastes the final URI into the host. See `UriPredicate` parameter for more on GUI-disabled situation.
