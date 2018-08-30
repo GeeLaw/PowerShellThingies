@@ -1,0 +1,69 @@
+Add-Type -AssemblyName PresentationFramework;
+If ([System.Windows.MessageBox]::Show('Do you want to uninstall MiKTeX from your account?', 'Confirm', 'YesNo', 'Question', 'No') -ne 6)
+{
+    Exit -1;
+}
+
+Set-Location ([System.Environment]::GetFolderPath('LocalApplicationData', 'Create')) -ErrorAction SilentlyContinue;
+If ($Error.Count -ne 0)
+{
+    [System.Windows.MessageBox]::Show('Could not uninstall MiKTeX: Could not navigate to LocalAppData folder.', 'Error', 'OK', 'Hand');
+    Exit -1;
+}
+
+$uninstKeyRegex = [regex]::new('^(Software\\Microsoft\\Windows.*?\\Uninstall\\.*?);UninstallString$', 'IgnoreCase');
+$uninstKey = @(Get-Content .\Programs\MiKTeX\miktex\config\uninst.log -ErrorAction SilentlyContinue | ForEach-Object -Begin { $inhkcu = $False } -Process {
+    If ([string]::IsNullOrWhiteSpace($_))
+    {
+        Continue;
+    }
+    $_ = $_.Trim();
+    If ($_.ToLowerInvariant() -eq '[hkcu]')
+    {
+        $inhkcu = $True;
+    }
+    ElseIf ($_.StartsWith('['))
+    {
+        $inhkcu = $False;
+    }
+    ElseIf ($inhkcu)
+    {
+        $testMatch = $uninstKeyRegex.Match($_);
+        If ($testMatch.Success)
+        {
+            'HKCU:\' + $testMatch.Groups[1].Value;
+        }
+    }
+});
+If ($Error.Count -ne 0)
+{
+    [System.Windows.MessageBox]::Show('Could not uninstall MiKTeX: Could not read uninst.log file.', 'Error', 'OK', 'Hand');
+    Exit -1;
+}
+If ($uninstKey.Count -ne 1)
+{
+    [System.Windows.MessageBox]::Show('Could not uninstall MiKTeX: Could not locate the Uninstall registry key. There are ' + $uninstKey.Count.ToString() + ' candidates.', 'Error', 'OK', 'Hand');
+    Exit -1;
+}
+$uninstKey = $uninstKey[0];
+
+$uninstProc = Start-Process .\Programs\MiKTeX\miktex\bin\x64\miktexsetup.exe -ArgumentList '--shared=no', 'uninstall' -WindowStyle Hidden -PassThru -ErrorAction SilentlyContinue;
+If ($Error.Count -ne 0)
+{
+    [System.Windows.MessageBox]::Show('Could not uninstall MiKTeX: Could not launch the uninstaller.', 'Error', 'OK', 'Hand');
+    Exit -1;
+}
+
+$uninstProc.WaitForExit();
+If ($uninstProc.ExitCode -ne 0)
+{
+    [System.Windows.MessageBox]::Show('Could not uninstall MiKTeX: Uninstaller returned ' + $uninstProc.ExitCode.ToString() + '.', 'Error', 'OK', 'Hand');
+    Exit ($uninstProc.ExitCode);
+}
+
+Remove-Item $uninstKey -Force -Recurse -ErrorAction Ignore;
+Remove-Item 'HKCU:\Software\MiKTeX.org' -Force -Recurse -ErrorAction Ignore;
+Remove-Item .\Programs\MiKTeX -Force -Recurse -ErrorAction Ignore;
+Remove-Item .\MiKTeX -Force -Recurse -ErrorAction Ignore;
+[System.Windows.MessageBox]::Show('MiKTeX has been uninstalled from your account.', 'Success', 'OK', 'Asterisk');
+Exit 0;

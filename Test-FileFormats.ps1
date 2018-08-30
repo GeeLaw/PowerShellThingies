@@ -48,7 +48,7 @@ Param
 )
 Process
 {
-    $local:binExt = @('.png');
+    $local:binExt = @('.png', '.dat');
     $local:utf8woBomLfExt = @('.gitignore', '.md', '.ps1', '.psd1', '.psm1', '.cs', '.html');
     $local:checker = {
         Push-Location -LiteralPath $PSScriptRoot;
