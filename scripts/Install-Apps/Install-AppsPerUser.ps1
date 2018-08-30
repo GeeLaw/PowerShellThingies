@@ -12,12 +12,8 @@ $currentPrincipal = [System.Security.Principal.WindowsPrincipal]::new($currentId
 $adminRole = [System.Security.Principal.WindowsBuiltInRole]::Administrator
 If ($currentPrincipal.IsInRole($adminRole))
 {
-    Write-Warning 'You are running as administrator. It is advisable to run Install-AppsPerUser.ps1 unelevated.' -WarningAction Continue;
-    [bool]$dummy = $False;
-    If (-not $PSCmdlet.ShouldContinue('Do you wish to stop?', 'Confirm', $True, [ref]$dummy, [ref]$dummy))
-    {
-        Return;
-    }
+    Write-Error 'You are running as administrator. You must run Install-AppsPerUser.ps1 UNelevated, or MiKTeX will refuse to do a per-user install.' -ErrorAction Continue;
+    Return;
 }
 
 # Prologue
