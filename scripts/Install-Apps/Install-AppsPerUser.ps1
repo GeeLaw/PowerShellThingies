@@ -54,6 +54,7 @@ If ($Error.Count -ne 0)
 .\PerUser\Install-MiKTeX.ps1 -ScratchDirectory $scratchDir -FailFastTemplate $FFTplt;
 .\PerUser\Install-VSCode.ps1 -ScratchDirectory $scratchDir -FailFastTemplate $FFTplt;
 .\PerUser\Install-ILSpy.ps1 -ScratchDirectory $scratchDir -FailFastTemplate $FFTplt;
+.\PerUser\Install-Sysinternals.ps1 -ScratchDirectory $scratchDir -FailFastTemplate $FFTplt;
 
 # Not automated.
 .\PerUser\Install-SourceTree.ps1 -ScratchDirectory $scratchDir -FailFastTemplate $FFTplt;
