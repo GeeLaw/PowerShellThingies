@@ -53,6 +53,7 @@ If ($Error.Count -ne 0)
 Write-Verbose "Scratch directory: $scratchDir" -Verbose;
 
 # Automated, must-haves.
+.\PerUser\Install-PSReadlineHistoryRemover.ps1 -ScratchDirectory $scratchDir -FailFastTemplate $FFTplt;
 .\PerUser\Install-MiKTeX.ps1 -ScratchDirectory $scratchDir -FailFastTemplate $FFTplt;
 .\PerUser\Install-VSCode.ps1 -ScratchDirectory $scratchDir -FailFastTemplate $FFTplt;
 .\PerUser\Install-ILSpy.ps1 -ScratchDirectory $scratchDir -FailFastTemplate $FFTplt;
