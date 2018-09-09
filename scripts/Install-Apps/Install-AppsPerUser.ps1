@@ -43,12 +43,14 @@ If ($Error.Count -ne 0)
     Return;
 }
 Remove-Item -LiteralPath $scratchDir -Force -Recurse -ErrorAction Ignore;
-New-Item $scratchDir -ItemType Directory -Force | Invoke-Item;
+New-Item $scratchDir -ItemType Directory -Force | Invoke-Item -ErrorAction Ignore;
 If ($Error.Count -ne 0)
 {
     Write-Error 'Failed to create the scratch directory. Cancelled.';
     Return;
 }
+
+Write-Verbose "Scratch directory: $scratchDir" -Verbose;
 
 # Automated, must-haves.
 .\PerUser\Install-MiKTeX.ps1 -ScratchDirectory $scratchDir -FailFastTemplate $FFTplt;
