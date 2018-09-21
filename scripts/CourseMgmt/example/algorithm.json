@@ -1,0 +1,31 @@
+{
+    "Subject": "Topics in Combinatorial Algorithms",
+    "Location": "2510, Phelps Hall, Building 560, University of California, Santa Barbara, Santa Barbara, CA 93106, USA",
+    "Reminder": 60,
+    "Occurrences":
+    [
+        {
+            "Weeks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            "Day": 2,
+            "StartHour": 9,
+            "StartMinute": 0,
+            "EndHour": 10,
+            "EndMinute": 50,
+            "OverrideSubject": null,
+            "OverrideLocation": null,
+            "OverrideReminder": null
+        },
+        {
+            "Weeks": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            "Day": 4,
+            "StartHour": 9,
+            "StartMinute": 0,
+            "EndHour": 10,
+            "EndMinute": 50,
+            "OverrideSubject": null,
+            "OverrideLocation": null,
+            "OverrideReminder": null
+        }
+    ],
+    "CorrId": "e78882be8d9f4ec593ba751f1d25b871"
+}

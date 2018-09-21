@@ -1,0 +1,42 @@
+{
+    "Subject": "Modern Algebra",
+    "Location": "1207, Humanities and Social Sciences Building, Building 515, University of California, Santa Barbara, Santa Barbara, CA 93106, USA",
+    "Reminder": 60,
+    "Occurrences":
+    [
+        {
+            "Weeks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            "Day": 1,
+            "StartHour": 13,
+            "StartMinute": 0,
+            "EndHour": 13,
+            "EndMinute": 50,
+            "OverrideSubject": null,
+            "OverrideLocation": null,
+            "OverrideReminder": null
+        },
+        {
+            "Weeks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            "Day": 3,
+            "StartHour": 13,
+            "StartMinute": 0,
+            "EndHour": 13,
+            "EndMinute": 50,
+            "OverrideSubject": null,
+            "OverrideLocation": null,
+            "OverrideReminder": null
+        },
+        {
+            "Weeks": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            "Day": 5,
+            "StartHour": 13,
+            "StartMinute": 0,
+            "EndHour": 13,
+            "EndMinute": 50,
+            "OverrideSubject": null,
+            "OverrideLocation": null,
+            "OverrideReminder": null
+        }
+    ],
+    "CorrId": "be7b249589fc4bcba9661a127c973b6a"
+}

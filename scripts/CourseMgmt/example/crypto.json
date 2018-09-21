@@ -1,0 +1,31 @@
+{
+    "Subject": "Special Topics in Computer Science, Foundations, General",
+    "Location": "2510, Phelps Hall, Building 560, University of California, Santa Barbara, Santa Barbara, CA 93106, USA",
+    "Reminder": 60,
+    "Occurrences":
+    [
+        {
+            "Weeks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            "Day": 1,
+            "StartHour": 9,
+            "StartMinute": 0,
+            "EndHour": 10,
+            "EndMinute": 50,
+            "OverrideSubject": null,
+            "OverrideLocation": null,
+            "OverrideReminder": null
+        },
+        {
+            "Weeks": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            "Day": 3,
+            "StartHour": 9,
+            "StartMinute": 0,
+            "EndHour": 10,
+            "EndMinute": 50,
+            "OverrideSubject": null,
+            "OverrideLocation": null,
+            "OverrideReminder": null
+        }
+    ],
+    "CorrId": "af3edf80dcb5473bbef55a19525723cd"
+}
