@@ -209,7 +209,7 @@ Process
                         }
                         Else
                         {
-                            Return ($commonLast / $len -ge 0.5)
+                            Return ($commonLast / $len -ge 0.8)
                         }
                     }
                     Return ($commonLast / $len -ge 0.8)
