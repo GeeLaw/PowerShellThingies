@@ -1,6 +1,6 @@
 # Use-RawPipeline
 
-This module provides better raw pipeline than PowerShell 5.
+This module provides better raw pipeline than that in Windows PowerShell 5. For (potential) PowerShell users on POSIX systems, you are encouraged to have a look at [Use-PosixPipeline](https://github.com/Aloxaf/Use-PosixPipeline) by Aloxaf.
 
 > 中文使用者请参阅 [我的博客](https://geelaw.blog/entries/powershell-use-rawpipeline/)。
 
