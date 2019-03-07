@@ -17,58 +17,30 @@ If ($Host.Version -lt '4.0')
 }
 Else
 {
-    Write-Warning "Install YaHei Consolas Hybrid if you haven't.";
-
-    $script:consoleTtf = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont';
-    $script:page936 = Get-ItemProperty -Path $consoleTtf | Get-Member -MemberType NoteProperty | Where-Object Name -match '0*936'
-    If (($page936 | Where-Object { (Get-ItemPropertyValue -Path $consoleTtf -Name $_.Name) -eq 'YaHei Consolas Hybrid' }).Length -gt 0)
-    {
-        Write-Verbose 'You have YaHei Consolas Hybrid in console fonts.';
-    }
-    Else
-    {
-        Write-Verbose 'Installing YaHei Consolas Hybrid in elevated process.';
-        $procArgs = '-NoLogo -NoProfile -NonInteractive -WindowStyle Hidden ';
-        $procArgs += '-ExecutionPolicy Bypass -Command & "';
-        $procArgs += [System.IO.Path]::Combine($PSScriptRoot, 'Install-YaHeiConsolas.ps1');
-        $procArgs += '"';
-        $proc = Start-Process -FilePath 'powershell' -ArgumentList $procArgs `
-            -Verb 'runas' -WindowStyle 'Hidden' `
-            -WorkingDirectory $PSScriptRoot -PassThru;
-        If ($proc -eq $null)
-        {
-            Write-Error 'Failed to start the process to install YaHei Consolas Hybrid into the registry.';
-            Return;
-        }
-        $proc.WaitForExit();
-        If ($proc.ExitCode -ne 0)
-        {
-            Write-Error 'Failed to install YaHei Consolas Hybrid into the registry.';
-            Return;
-        }
-    }
+    Write-Verbose "Install Microsoft YaHei Mono if you haven't." -Verbose;
+    Write-Verbose "https://github.com/Microsoft/WSL/issues/2463#issuecomment-334692823" -Verbose;
 
     Write-Warning 'The script is going to reset all your console default preference to default.';
 
     Remove-Item -Path 'HKCU:\Console\*' -Force -Recurse;
 
     @{
-        'ColorTable00' = 0x00000000;
-        'ColorTable01' = 0x00800000;
-        'ColorTable02' = 0x00008000;
-        'ColorTable03' = 0x00808000;
-        'ColorTable04' = 0x00000080;
-        'ColorTable05' = 0x00562401;
-        'ColorTable06' = 0x00f0edee;
-        'ColorTable07' = 0x00c0c0c0;
-        'ColorTable08' = 0x00808080;
-        'ColorTable09' = 0x00ff0000;
-        'ColorTable10' = 0x0000ff00;
-        'ColorTable11' = 0x00ffff00;
-        'ColorTable12' = 0x000000ff;
-        'ColorTable13' = 0x00ff00ff;
-        'ColorTable14' = 0x0000ffff;
-        'ColorTable15' = 0x00ffffff;
+        'ColorTable00' = 0x00000000; # Black
+        'ColorTable01' = 0x00b20000; # DarkBlue
+        'ColorTable02' = 0x0000a600; # DarkGreen
+        'ColorTable03' = 0x00646400; # DarkCyan
+        'ColorTable04' = 0x00000099; # DarkRed
+        'ColorTable05' = 0x00b200b2; # DarkMagenta
+        'ColorTable06' = 0x0000ade5; # DarkYellow
+        'ColorTable07' = 0x00cccccc; # Gray
+        'ColorTable08' = 0x00666666; # DarkGray
+        'ColorTable09' = 0x00ff0000; # Blue
+        'ColorTable10' = 0x0000d900; # Green
+        'ColorTable11' = 0x00e5e500; # Cyan
+        'ColorTable12' = 0x000000e5; # Red
+        'ColorTable13' = 0x00e500e5; # Magenta
+        'ColorTable14' = 0x0000ffff; # Yellow
+        'ColorTable15' = 0x00ffffff; # White
         'CtrlKeyShortcutsDisabled' = 0x00000000;
         'CursorSize' = 0x00000019;
         'EnableColorSelection' = 0x00000000;
@@ -87,10 +59,10 @@ Else
         'LineWrap' = 0x00000001;
         'LoadConIme' = 0x00000001;
         'NumberOfHistoryBuffers' = 0x00000004;
-        'PopupColors' = 0x000000f3;
+        'PopupColors' = 0x0000003e; # Yellow on DarkCyan
         'QuickEdit' = 0x00000001;
         'ScreenBufferSize' = 0x03e80050;
-        'ScreenColors' = 0x00000056;
+        'ScreenColors' = 0x0000000f; # White on Black
         'ScrollScale' = 0x00000001;
         'TrimLeadingZeros' = 0x00000000;
         'WindowAlpha' = 0x000000ff;
@@ -103,8 +75,8 @@ Else
         Set-ItemProperty -Path 'HKCU:\Console' -Name $_.Name -Type 'DWord' -Value $_.Value;
     }
 
-    Set-ItemProperty -Path 'HKCU:\Console' -Name 'FaceName' -Type 'String' -Value 'YaHei Consolas Hybrid';
+    Set-ItemProperty -Path 'HKCU:\Console' -Name 'FaceName' -Type 'String' -Value 'Microsoft YaHei Mono';
 
-    Write-Verbose 'Finished configuring your console.';
-    Write-Warning 'You should recreate shortcuts of console applications you have used so that they get the default look.';
+    Write-Verbose 'Finished configuring your console.' -Verbose;
+    Write-Verbose 'You should recreate shortcuts of console applications you have used so that they get the default look.' -Verbose;
 }
