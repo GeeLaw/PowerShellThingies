@@ -3,25 +3,78 @@ Param ()
 
 Begin
 {
-    $script:SupportedExts = @('.bmp', '.dib', '.emf', '.gif', '.ico', '.jfif', '.jpe', '.jpeg', '.jpg', '.png', '.rle', '.tif', '.tiff', '.wmf');
-    $script:SupportedMimes = @('image/bmp', 'image/x-emf', 'image/gif', 'image/x-icon', 'image/jpeg', 'image/png', 'image/tiff', 'image/x-wmf');
-    If (-not $PSCmdlet.ShouldProcess("UNregistering the file association of Windows Photo Viewer`nfor extensions:`n" + ($SupportedExts -join '/') + "`nand for MIME types:`n" + ($SupportedMimes -join ', ') + '.',
-        "About to UNregister the file association of Windows Photo Viewer`n`nfor extensions:`n" + ($SupportedExts -join '/') + "`n`nand for MIME types:`n" + ($SupportedMimes -join ', ') + ".`n`nDo you want to continue?",
-        'File Association DEregistration'))
+    $script:CompanyName = 'BringBackMsft';
+    $script:ProductName = 'PhotoViewier';
+    $script:AppName = 'Windows Photo Viewer (Resurrected)';
+    $script:SupportedTypes = @(
+        @{ 'ProgIdSuffix' = 'bmp';
+           'FriendlyName' = 'Bitmap Image';
+           'Exts' = @('.bmp');
+           'Mimes' = @('image/bmp');
+           'IconResource' = '%systemroot%\system32\imageres.dll,-70' },
+        @{ 'ProgIdSuffix' = 'dib';
+           'FriendlyName' = 'Device-Independent Bitmap Image';
+           'Exts' = @('.dib');
+           'Mimes' = @();
+           'IconResource' = '%systemroot%\system32\imageres.dll,-70' },
+        @{ 'ProgIdSuffix' = 'emf';
+           'FriendlyName' = 'Enhanced Windows Metafile Image';
+           'Exts' = @('.emf');
+           'Mimes' = @('image/emf', 'image/x-emf');
+           'IconResource' = '%SystemRoot%\system32\mspaint.exe,-3' },
+        @{ 'ProgIdSuffix' = 'gif';
+           'FriendlyName' = 'Graphics Interchange Format Image';
+           'Exts' = @('.gif');
+           'Mimes' = @('image/gif');
+           'IconResource' = '%SystemRoot%\System32\imageres.dll,-71' },
+        @{ 'ProgIdSuffix' = 'ico';
+           'FriendlyName' = 'Icon';
+           'Exts' = @('.ico');
+           'Mimes' = @('image/x-icon');
+           'IconResource' = '%1' },
+        @{ 'ProgIdSuffix' = 'pjpeg';
+           'FriendlyName' = 'JPEG File Interchange Format Image';
+           'Exts' = @('.jfif');
+           'Mimes' = @();
+           'IconResource' = '%SystemRoot%\System32\imageres.dll,-72' },
+        @{ 'ProgIdSuffix' = 'jpeg';
+           'FriendlyName' = 'Joint Photographic Experts Group Image';
+           'Exts' = @('.jpe', '.jpeg', '.jpg');
+           'Mimes' = @('image/jpeg');
+           'IconResource' = '%SystemRoot%\System32\imageres.dll,-72' },
+        @{ 'ProgIdSuffix' = 'png';
+           'FriendlyName' = 'Portable Network Graphics Image';
+           'Exts' = @('.png');
+           'Mimes' = @('image/png');
+           'IconResource' = '%SystemRoot%\System32\imageres.dll,-83' },
+        @{ 'ProgIdSuffix' = 'rle';
+           'FriendlyName' = 'Run-Length Encoded Image';
+           'Exts' = @('.rle');
+           'Mimes' = @();
+           'IconResource' = '%SystemRoot%\system32\mspaint.exe,-3' },
+        @{ 'ProgIdSuffix' = 'tiff';
+           'FriendlyName' = 'Tag Image File Format Image';
+           'Exts' = @('.tif', '.tiff');
+           'Mimes' = @('image/tiff');
+           'IconResource' = '%SystemRoot%\System32\imageres.dll,-122' },
+        @{ 'ProgIdSuffix' = 'wmf';
+           'FriendlyName' = 'Windows Metafile Image';
+           'Exts' = @('.wmf');
+           'Mimes' = @('image/wmf', 'image/x-wmf');
+           'IconResource' = '%SystemRoot%\system32\mspaint.exe,-3' }
+    ) | ForEach-Object {
+        $_['FileTypes'] = $_['Exts'] + $_['Mimes'];
+        $_['ProgId'] = $CompanyName + '.' + $ProductName + '.' + $_['ProgIdSuffix'];
+        [pscustomobject]$_;
+    } | Where-Object -Property 'ProgIdSuffix' -in @('bmp', 'dib', 'gif', 'ico', 'pjpeg', 'jpeg', 'png');
+    $script:AssocPromptString = $SupportedTypes | Format-Table -Property ProgId, FileTypes -AutoSize | Out-String;
+    If (-not $PSCmdlet.ShouldProcess("UNregistering file associations with $($AppName):`n`n" + $AssocPromptString,
+        "About to UNregister file associations with $($AppName):`n`n" + $AssocPromptString + "`n`nDo you want to continue?",
+        'File Association DERegistration'))
     {
         Break;
     }
     $script:ErrorActionPreference = 'Inquire';
-    $script:CompanyName = 'BringBackMsft';
-    $script:ProductName = 'PhotoViewier';
-    $script:FileName = 'File';
-    $script:AppName = 'Windows Photo Viewer';
-    $script:AppHeadline = 'The good old Windows Photo Viewer.';
-    $script:FriendlyFileType = 'Photo file';
-    $script:IconResource = '%SystemRoot%\SHELL32.dll,324';
-    $script:MuiVerb = '@%ProgramFiles%\Windows Photo Viewer\photoviewer.dll,-3043';
-    $script:CmdString = '"%SystemRoot%\System32\rundll32.exe" "%ProgramFiles%\Windows Photo Viewer\PhotoViewer.dll", ImageView_Fullscreen %1';
-    $script:DropTarget = '{FFE2A43C-56B9-4bf5-9A79-CC6D4285608A}';
     $script:PInvoke = '[System.Runtime.InteropServices.DllImport("Shell32.dll")] public static extern void SHChangeNotify(int wEventId, uint uFlags, System.UIntPtr dwItem1, System.UIntPtr dwItem2);';
     $script:PInvokeNS = 'PInvoke_23d32a02cf9c4b738171c5784dcf978b';
     $script:PInvokeClass = 'Shell32';
@@ -39,9 +92,8 @@ Process
     }
     Else
     {
-        Write-Verbose "    Deleting HKCU:\Software\$CompanyName\$ProductName.";
+        Write-Verbose "    Removing HKCU:\Software\$CompanyName\$ProductName.";
         Remove-Item -LiteralPath "HKCU:\Software\$CompanyName\$ProductName" -Force -Recurse;
-        Write-Verbose '    Deleted.';
     }
     If (-not (Test-Path -LiteralPath 'HKCU:\Software\RegisteredApplications'))
     {
@@ -53,23 +105,27 @@ Process
     }
     Else
     {
-        Write-Verbose "    Deleting value $CompanyName.$ProductName from HKCU:\Software\RegisteredApplications.";
+        Write-Verbose "    Removing value $CompanyName.$ProductName from HKCU:\Software\RegisteredApplications.";
         Remove-ItemProperty -LiteralPath 'HKCU:\Software\RegisteredApplications' -Name "$CompanyName.$ProductName" -Force;
-        Write-Verbose '    Deleted.';
     }
     Write-Verbose 'Finished unregistering application capabilities.';
-    Write-Verbose 'Removing ProgID entry.';
-    If (-not (Test-Path -LiteralPath "HKCU:\Software\Classes\$CompanyName.$ProductName.$FileName"))
-    {
-        Write-Verbose "    HKCU:\Software\Classes\$CompanyName.$ProductName.$FileName (ProgID) does not exist.";
-    }
-    Else
-    {
-        Write-Verbose "    Deleting HKCU:\Software\Classes\$CompanyName.$ProductName.$FileName (ProgID entry).";
-        Remove-Item -LiteralPath "HKCU:\Software\Classes\$CompanyName.$ProductName.$FileName" -Force -Recurse;
-        Write-Verbose '    Deleted.';
-    }
-    Write-Verbose 'Finished removing ProgID entry.';
+    Write-Verbose 'Removing ProgID entries.';
+    $SupportedTypes | Write-Output -PipelineVariable CurrentType | ForEach-Object {
+        If (-not (Test-Path -LiteralPath "HKCU:\Software\Classes\$($_.ProgId)"))
+        {
+            Write-Verbose "    HKCU:\Software\Classes\$($CurrentType.ProgId) does not exist.";
+        }
+        Else
+        {
+            Write-Verbose "    Removing HKCU:\Software\Classes\$($CurrentType.ProgId).";
+            Remove-Item -LiteralPath "HKCU:\Software\Classes\$($CurrentType.ProgId)" -Force -Recurse;
+        }
+        $_.Exts | ForEach-Object {
+            Write-Verbose "    Removing value $($CurrentType.ProgId) in HKCU:\Software\Classes\$_\OpenWithProgids.";
+            Remove-ItemProperty -LiteralPath "HKCU:\Software\Classes\$_\OpenWithProgids" -Name $CurrentType.ProgId -Force -ErrorAction 'Ignore';
+        };
+    };
+    Write-Verbose 'Finished removing ProgID entries.';
     Write-Verbose 'Calling SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST | SHCNF_FLUSH, NULL, NULL).';
     [PInvoke_23d32a02cf9c4b738171c5784dcf978b.Shell32]::SHChangeNotify(0x8000000, 0x1000, [System.UIntPtr]::Zero, [System.UIntPtr]::Zero);
     Write-Verbose 'SHChangeNotify returned.';
