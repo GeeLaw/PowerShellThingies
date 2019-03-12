@@ -2,7 +2,7 @@
 
 These scripts, along with `Install-Apps`, `WinConsole` and `-FastCredential` series (in `CommonUtilities`), form the workflow of creating a surrogate user to use some software or perform some tests, while minimizing the disk and time cost.
 
-Chinese speakers are encouraged to read an upcoming blog entry (keep tuned!) to understand the workflow and the techniques involved in the two file association scripts.
+Chinese speakers are encouraged to read [this blog entry](https://geelaw.blog/entries/windows-fileassoc-walkthru/) 《“打开方式”的“打开方式”》 to understand the workflow and the techniques involved in the two file association scripts.
 
 ## `Install-WindowsPhotoViewer.ps1`
 
