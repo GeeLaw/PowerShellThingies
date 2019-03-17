@@ -17,6 +17,12 @@ Besides those reasons, some people just like Windows Photo Viewer, so why not br
 
 Unregisters the file association, strictly following [the documentation](https://docs.microsoft.com/en-us/windows/desktop/shell/how-to-register-a-file-type-for-a-new-application).
 
+## `Use-MediaPreviewHandler.ps1`
+
+Registers Windows Media Player as the preview handler for all supported extensions. This is different from registering it as the preview handler for the corresponding ProgIDs, because Windows shell will always find them even if they are associated with Photos app.
+
+**Anecdote** iTunes actually supply Windows Media Player Preview Handler CLSID to its ProgIDs so that using iTunes as the default doesn’t break the ability to preview files in File Explorer.
+
 ## `Set-ExplorerOptions.ps1`
 
 Since some version of Windows (8/8.1/10?), it is very hard to run Explorer as another user while keeping basic usability. This is due to the fact that the *real* shell program is now `sihost.exe`. Since File Explorer Options controls how `IShellBrowser`/`IShellView` behaves. Specifically, you want to see hidden and system files and file extensions. It is possible to 
