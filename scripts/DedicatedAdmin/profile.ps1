@@ -95,4 +95,7 @@ New-Alias -Name 'Clear-History' -Value "Clear-HistoryFull" -Description 'Fully c
 
 New-Alias -Name 'Open-EnvironmentVariableEditor' -Value ([System.IO.Path]::Combine([System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::UserProfile), 'Open-EnvironmentVariableEditor.ps1')) -Description 'Opens the environment variable editor.' -Force -Option 'Constant','AllScope' -Scope 'Global';
 
+$oskPath = [System.IO.Path]::Combine([System.Environment]::GetFolderPath([System.Environment+SpecialFolder]::System), 'osk.exe');
+Start-Process -FilePath $oskPath;
+
 } | Out-Null;
