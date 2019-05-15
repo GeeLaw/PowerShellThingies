@@ -47,18 +47,20 @@ Function Clear-HistoryFull
 
 & {
 
+$charESC = ([char]0x1b).ToString();
+
 $options = Get-PSReadlineOption;
 @{
     "EditMode" = "Windows";
     "PromptText" = "> ";
     "ContinuationPromptForegroundColor" = "Gray";
-    "ContinuationPromptColor" = "`e[37m";
+    "ContinuationPromptColor" = $charESC + "[37m";
     "StringForegroundColor" = "Cyan";
-    "StringColor" = "`e[96m";
+    "StringColor" = $charESC + "[96m";
     "EmphasisForegroundColor" = "White";
     "EmphasisBackgroundColor" = "DarkCyan";
-    "EmphasisColor" = "`e[97;46m";
-    "SelectionColor" = "`e[30;47m"
+    "EmphasisColor" = $charESC + "[97;46m";
+    "SelectionColor" = $charESC + "[30;47m"
 }.GetEnumerator() | ForEach-Object {
     If (($options | Get-Member -MemberType 'Property' -Name ($_.Key) -ErrorAction Ignore) -ne $null)
     {
@@ -69,19 +71,19 @@ $options = $Host.PrivateData;
 @{
     "ErrorForegroundColor" = "White";
     "ErrorBackgroundColor" = "Red";
-    "ErrorColor" = "`e[97;101m";
+    "ErrorColor" = $charESC + "[97;101m";
     "WarningForegroundColor" = "Black";
     "WarningBackgroundColor" = "Yellow";
-    "WarningColor" = "`e[30;103m";
+    "WarningColor" = $charESC + "[30;103m";
     "DebugForegroundColor" = "Cyan";
     "DebugBackgroundColor" = "Black";
-    "DebugColor" = "`e[96;40m";
+    "DebugColor" = $charESC + "[96;40m";
     "VerboseForegroundColor" = "DarkYellow";
     "VerboseBackgroundColor" = "Black";
-    "VerboseColor" = "`e[33;40m";
+    "VerboseColor" = $charESC + "[33;40m";
     "ProgressForegroundColor" = "Yellow";
     "ProgressBackgroundColor" = "DarkCyan"
-    "ProgressColor" = "`e[93;46m";
+    "ProgressColor" = $charESC + "[93;46m";
 }.GetEnumerator() | ForEach-Object {
     If (($options | Get-Member -MemberType 'Property' -Name ($_.Key) -ErrorAction Ignore) -ne $null)
     {
