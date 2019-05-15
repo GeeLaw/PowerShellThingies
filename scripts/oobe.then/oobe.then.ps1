@@ -8,18 +8,22 @@
 .DESCRIPTION
     The script does the following:
     1. Disables background on Welcome Screen;
-    2. Prompts the user to rename the computer;
-    3. Prompts the user to set a new locale;
-    4. Prompts the user to change the registration information;
-    5. Interactively removes user-selected Microsoft Store apps from the system;
-    6. Sets DWM inactive window colour.
-    7. Updates help content for PowerShell.
+    2. Disables the acrylic effect on Welcome Screen;
+    3. Prompts the user to rename the computer;
+    4. Prompts the user to set a new locale;
+    5. Prompts the user to change the registration information;
+    6. Interactively removes user-selected Microsoft Store apps from the system;
+    7. Sets DWM inactive window colour.
+    8. Updates help content for PowerShell.
 
     All steps can be turned off in advance with switches;
     in addition, step 2, 3, 4 and 5 can be cancelled on demand.
 
 .PARAMETER DisableLogonBackground
     Disables background image on Welcome Screen without confirmation.
+
+.PARAMETER DisableLogonTransparency
+    Disables the acrylic effect on Welcome Screen without confirmation.
 
 .PARAMETER ComputerName
     Sets a new computer name. If blank, computer name is left unchanged. If not supplied, the value is asked interactively.
@@ -51,6 +55,8 @@ Param
     [Parameter(Mandatory = $false)]
     [switch]$DisableLogonBackground,
     [Parameter(Mandatory = $false)]
+    [switch]$DisableLogonTransparency,
+    [Parameter(Mandatory = $false)]
     [string]$ComputerName = '!',
     [Parameter(Mandatory = $false)]
     [string]$Locale = '!',
@@ -76,6 +82,16 @@ Process
     Else
     {
         Write-Verbose 'Did not disable logon background image of Welcome Screen.';
+    }
+    <# Disables transparency on Welcome Screen. #>
+    If ($DisableLogonTransparency -or $PSCmdlet.ShouldProcess('Welcome Screen', 'Disable transparency effect'))
+    {
+        Set-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows\System' -Name 'DisableAcrylicBackgroundOnLogon' -Type DWord -Value 1;
+        Write-Verbose 'Disabled transparency of Welcome Screen.';
+    }
+    Else
+    {
+        Write-Verbose 'Did not disable transparency of Welcome Screen.';
     }
     <# Renames computer. #>
     If ($ComputerName -eq '!')
