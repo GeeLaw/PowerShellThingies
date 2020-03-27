@@ -35,6 +35,7 @@ $uninstKey = @(Get-Content .\Programs\MiKTeX\miktex\config\uninst.log -ErrorActi
         }
     }
 });
+$uninstKey = @($uninstKey.ToLowerInvariant() | Sort-Object | Get-Unique);
 If ($Error.Count -ne 0)
 {
     [System.Windows.MessageBox]::Show('Could not uninstall MiKTeX: Could not read uninst.log file.', 'Error', 'OK', 'Hand');
