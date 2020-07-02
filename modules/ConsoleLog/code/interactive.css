@@ -1,0 +1,102 @@
+*
+{
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  line-height: 1.4;
+  -ms-high-contrast-adjust: none !important;
+}
+html { color: #000; background: #fff; font-size: 16px; }
+body
+{
+  color: #000;
+  background: #fff;
+  max-width: 1024px;
+  margin: auto;
+  padding: 2em 0 4em 1em;
+  font-family: 'Consolas', 'Menlo', 'Courier New', 'Courier',
+  'Microsoft YaHei', 'PingFang SC', 'PingFangSC', monospace;
+}
+
+.color
+{
+  padding: 0.0625em 0.1875em;
+  border: 0.0625em solid transparent;
+  border-radius: 0.1875em;
+}
+.fg-black { color: #000000; } .bg-black { background-color: #000000; border-color: #000000; }
+.fg-darkblue { color: #000080; } .bg-darkblue { background-color: #000080; border-color: #000080; }
+.fg-darkgreen { color: #008000; } .bg-darkgreen { background-color: #008000; border-color: #008000; }
+.fg-darkcyan { color: #008080; } .bg-darkcyan { background-color: #008080; border-color: #008080; }
+.fg-darkred { color: #800000; } .bg-darkred { background-color: #800000; border-color: #800000; }
+.fg-darkmagenta { color: #8b008b; } .bg-darkmagenta { background-color: #8b008b; border-color: #8b008b; }
+.fg-darkyellow { color: #9b870c; } .bg-darkyellow { background-color: #9b870c; border-color: #9b870c; }
+.fg-gray { color: #c0c0c0; } .bg-gray { background-color: #c0c0c0; border-color: #c0c0c0; }
+.fg-darkgray { color: #808080; } .bg-darkgray { background-color: #808080; border-color: #808080; }
+.fg-blue { color: #0000ff; } .bg-blue { background-color: #0000ff; border-color: #0000ff; }
+.fg-green { color: #00ff00; } .bg-green { background-color: #00ff00; border-color: #00ff00; }
+.fg-cyan { color: #00ffff; } .bg-cyan { background-color: #00ffff; border-color: #00ffff; }
+.fg-red { color: #ff0000; } .bg-red { background-color: #ff0000; border-color: #ff0000; }
+.fg-magenta { color: #ff00ff; } .bg-magenta { background-color: #ff00ff; border-color: #ff00ff; }
+.fg-yellow { color: #ffff00; } .bg-yellow { background-color: #ffff00; border-color: #ffff00; }
+.fg-white { color: #ffffff; } .bg-white { background-color: #ffffff; border-color: #ffffff; }
+
+.span { padding: 0.1em 0; white-space: pre-wrap; }
+.line>.content>.none { padding: 0.1em 0; }
+.span>.color { white-space: pre-wrap; word-break: break-all; }
+
+.container>input[type="checkbox"]
+{
+  display: block;
+  float: left;
+  font-size: 0.5em;
+  margin: 1.2em -2em 0 -2em;
+  opacity: 0;
+}
+.container>input[type="checkbox"]+label
+{
+  display: block;
+  border: 0.0625em dashed transparent;
+  border-bottom: 0.0625em solid #666;
+  margin: 0.25em 0;
+  padding: 0.375em 0;
+}
+.console.container>input[type="checkbox"]+label { border-width: 0.125em; }
+.container>input[type="checkbox"]+label::before { content: "[+] "; }
+.container>input[type="checkbox"]:checked+label::before { content: "[-] "; }
+.content { display: none; margin-left: 2.25em; }
+.container>input[type="checkbox"]:checked+label+.content { display: block; }
+
+@media (max-width: 600px) { html { font-size: 14px; } }
+@media (max-width: 500px) { html { font-size: 12px; } }
+
+@media screen
+{
+  .container>input[type="checkbox"]:focus+label
+  { border-style: dashed; border-color: #000; background: #ddd; }
+  .container>input[type="checkbox"]+label:hover
+  { cursor: pointer; background: #ddd; }
+}
+
+@media print
+{
+  body { padding: 0; }
+  .container>input[type="checkbox"],
+  .container>input[type="checkbox"]+label::before
+  { display: none !important; }
+  .container>input[type="checkbox"]+label { padding-bottom: 0.2em; }
+  .content { display: block; margin-left: 1em; }
+  .span::before, .line.container>.none::before { content: "•"; margin: 0 0.2em 0 -0.8em; }
+  .color { background-color: transparent !important; }
+  .fg-gray { color: #606060; } .bg-gray { border-color: #505050; }
+  .fg-darkgray { color: #404040; } .bg-darkgray { border-color: #303030; }
+  .fg-green { color: #00b000; } .bg-green { border-color: #00b000; }
+  .fg-cyan { color: #00b0b0; } .bg-cyan { border-color: #00b0b0; }
+  .fg-magenta { color: #c000c0; } .bg-magenta { border-color: #c000c0; }
+  .fg-yellow { color: #ff8c00; } .bg-yellow { border-color: #daa520; }
+  .fg-white { color: #000000; } .bg-white { border-color: #808080; }
+}
+
+@media (min-resolution: 140dpi)
+{ body { font-family: 'Consolas', 'Menlo', 'Courier New', 'Courier',
+'DengXian', 'Microsoft YaHei', 'PingFang SC', 'PingFangSC', monospace; } }

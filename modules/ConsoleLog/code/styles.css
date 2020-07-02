@@ -1,0 +1,217 @@
+pre.gl-console { white-space: normal; word-break: break-all; }
+pre.gl-console *
+{
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+pre.gl-console, pre.gl-console *, pre.gl-console *::before, pre.gl-console *::after
+{
+  line-height: 1.2;
+  font-family: 'Consolas', 'Menlo', 'Courier New', 'Courier',
+    'Microsoft YaHei', 'PingFang SC', 'PingFangSC', monospace;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -ms-high-contrast-adjust: none !important;
+}
+pre.gl-console[data-width="80"] { width: 46em; width: 81ch; }
+pre.gl-console>code { display: block; }
+pre.gl-console>code>span { display: inline-block; }
+
+.gl-console-fg-black { color: #000000; }
+.gl-console-bg-black { background-color: #000000; }
+
+.gl-console-fg-darkblue { color: #000080; }
+.gl-console-bg-darkblue { background-color: #000080; }
+
+.gl-console-fg-darkgreen { color: #008000; }
+.gl-console-bg-darkgreen { background-color: #008000; }
+
+.gl-console-fg-darkcyan { color: #008080; }
+.gl-console-bg-darkcyan { background-color: #008080; }
+
+.gl-console-fg-darkred { color: #800000; }
+.gl-console-bg-darkred { background-color: #800000; }
+
+.gl-console-fg-darkmagenta { color: #8b008b; }
+.gl-console-bg-darkmagenta { background-color: #8b008b; }
+
+.gl-console-fg-darkyellow { color: #9b870c; }
+.gl-console-bg-darkyellow { background-color: #9b870c; }
+
+.gl-console-fg-gray { color: #c0c0c0; }
+.gl-console-bg-gray { background-color: #c0c0c0; }
+
+.gl-console-fg-darkgray { color: #808080; }
+.gl-console-bg-darkgray { background-color: #808080; }
+
+.gl-console-fg-blue { color: #0000ff; }
+.gl-console-bg-blue { background-color: #0000ff; }
+
+.gl-console-fg-green { color: #00ff00; }
+.gl-console-bg-green { background-color: #00ff00; }
+
+.gl-console-fg-cyan { color: #00ffff; }
+.gl-console-bg-cyan { background-color: #00ffff; }
+
+.gl-console-fg-red { color: #ff0000; }
+.gl-console-bg-red { background-color: #ff0000; }
+
+.gl-console-fg-magenta { color: #ff00ff; }
+.gl-console-bg-magenta { background-color: #ff00ff; }
+
+.gl-console-fg-yellow { color: #ffff00; }
+.gl-console-bg-yellow { background-color: #ffff00; }
+
+.gl-console-fg-white { color: #ffffff; }
+.gl-console-bg-white { background-color: #ffffff; }
+
+@media (min-resolution: 140dpi)
+{
+  pre[lang="console"], pre[lang="console"] *
+  {
+    font-family: 'Consolas', 'Menlo', 'Courier New', 'Courier',
+    'DengXian', 'Microsoft YaHei', 'PingFang SC', 'PingFangSC', monospace;
+  }
+}
+
+@media print
+{
+  pre.gl-console, pre.gl-console * { line-height: 1; }
+  pre.gl-console[data-width="80"] { width: 82ch; }
+
+  .gl-console-bg-black, .gl-console-bg-darkblue,
+  .gl-console-bg-darkgreen, .gl-console-bg-darkcyan,
+  .gl-console-bg-darkred, .gl-console-bg-darkmagenta,
+  .gl-console-bg-darkyellow, .gl-console-bg-gray,
+  .gl-console-bg-darkgray, .gl-console-bg-blue,
+  .gl-console-bg-green, .gl-console-bg-cyan,
+  .gl-console-bg-red, .gl-console-bg-magenta,
+  .gl-console-bg-yellow, .gl-console-bg-white
+  {
+    background-color: transparent;
+  }
+  .gl-console-fg-gray { color: #606060; }
+  .gl-console-fg-darkgray { color: #404040; }
+  .gl-console-fg-green { color: #00b000; }
+  .gl-console-fg-cyan { color: #00b0b0; }
+  .gl-console-fg-magenta { color: #c000c0; }
+  .gl-console-fg-yellow { color: #ff8c00; }
+  .gl-console-fg-white { color: #000000; }
+
+  pre.gl-console
+  { border: 1px solid transparent; background-color: #ffffff; }
+  pre.gl-console>code
+  {
+    padding: 0 1px;
+    margin: 0 -1px;
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+  }
+  pre.gl-console>code.gl-console-bg-none
+  {
+    padding: 3px 1px 1px 1px;
+  }
+  pre.gl-console>code>span { border-bottom: 1px dashed transparent; }
+
+  pre.gl-console>code.gl-console-bg-change:not(.gl-console-bg-none)::before,
+  pre.gl-console>code:not(.gl-console-bg-none)::after
+  {
+    content: "";
+    display: block;
+    height: 0px;
+    border-top: 2px solid transparent;
+    margin: 0px -3px 1px -3px;
+  }
+  pre.gl-console>code:not(.gl-console-bg-none)::after
+  { margin: 1px -3px 0px -3px; }
+  pre.gl-console.gl-console>code:not(.gl-console-bg-change):not(.gl-console-bg-none)::before
+  {
+    content: "";
+    display: block;
+    height: 0px;
+    border-top: 4px solid #fff;
+    margin: -3px -1px 0px -1px;
+  }
+
+  pre.gl-console-bg-black, pre.gl-console>code>span.gl-console-bg-black,
+  pre.gl-console.gl-console>code.gl-console-bg-black,
+  pre.gl-console.gl-console>code.gl-console-bg-black::before,
+  pre.gl-console.gl-console>code.gl-console-bg-black::after
+  { border-color: #000000; }
+  pre.gl-console-bg-darkblue, pre.gl-console>code>span.gl-console-bg-darkblue,
+  pre.gl-console.gl-console>code.gl-console-bg-darkblue,
+  pre.gl-console.gl-console>code.gl-console-bg-darkblue::before,
+  pre.gl-console.gl-console>code.gl-console-bg-darkblue::after
+  { border-color: #000080; }
+  pre.gl-console-bg-darkgreen, pre.gl-console>code>span.gl-console-bg-darkgreen,
+  pre.gl-console.gl-console>code.gl-console-bg-darkgreen,
+  pre.gl-console.gl-console>code.gl-console-bg-darkgreen::before,
+  pre.gl-console.gl-console>code.gl-console-bg-darkgreen::after
+  { border-color: #008000; }
+  pre.gl-console-bg-darkcyan, pre.gl-console>code>span.gl-console-bg-darkcyan,
+  pre.gl-console.gl-console>code.gl-console-bg-darkcyan,
+  pre.gl-console.gl-console>code.gl-console-bg-darkcyan::before,
+  pre.gl-console.gl-console>code.gl-console-bg-darkcyan::after
+  { border-color: #008080; }
+  pre.gl-console-bg-darkred, pre.gl-console>code>span.gl-console-bg-darkred,
+  pre.gl-console.gl-console>code.gl-console-bg-darkred,
+  pre.gl-console.gl-console>code.gl-console-bg-darkred::before,
+  pre.gl-console.gl-console>code.gl-console-bg-darkred::after
+  { border-color: #800000; }
+  pre.gl-console-bg-darkmagenta, pre.gl-console>code>span.gl-console-bg-darkmagenta,
+  pre.gl-console.gl-console>code.gl-console-bg-darkmagenta,
+  pre.gl-console.gl-console>code.gl-console-bg-darkmagenta::before,
+  pre.gl-console.gl-console>code.gl-console-bg-darkmagenta::after
+  { border-color: #8b008b; }
+  pre.gl-console-bg-darkyellow, pre.gl-console>code>span.gl-console-bg-darkyellow,
+  pre.gl-console.gl-console>code.gl-console-bg-darkyellow,
+  pre.gl-console.gl-console>code.gl-console-bg-darkyellow::before,
+  pre.gl-console.gl-console>code.gl-console-bg-darkyellow::after
+  { border-color: #9b870c; }
+  pre.gl-console-bg-gray, pre.gl-console>code>span.gl-console-bg-gray,
+  pre.gl-console.gl-console>code.gl-console-bg-gray,
+  pre.gl-console.gl-console>code.gl-console-bg-gray::before,
+  pre.gl-console.gl-console>code.gl-console-bg-gray::after
+  { border-color: #505050; }
+  pre.gl-console-bg-darkgray, pre.gl-console>code>span.gl-console-bg-darkgray,
+  pre.gl-console.gl-console>code.gl-console-bg-darkgray,
+  pre.gl-console.gl-console>code.gl-console-bg-darkgray::before,
+  pre.gl-console.gl-console>code.gl-console-bg-darkgray::after
+  { border-color: #303030; }
+  pre.gl-console-bg-blue, pre.gl-console>code>span.gl-console-bg-blue,
+  pre.gl-console.gl-console>code.gl-console-bg-blue,
+  pre.gl-console.gl-console>code.gl-console-bg-blue::before,
+  pre.gl-console.gl-console>code.gl-console-bg-blue::after
+  { border-color: #0000ff; }
+  pre.gl-console-bg-green, pre.gl-console>code>span.gl-console-bg-green,
+  pre.gl-console.gl-console>code.gl-console-bg-green,
+  pre.gl-console.gl-console>code.gl-console-bg-green::before,
+  pre.gl-console.gl-console>code.gl-console-bg-green::after
+  { border-color: #00b000; }
+  pre.gl-console-bg-cyan, pre.gl-console>code>span.gl-console-bg-cyan,
+  pre.gl-console.gl-console>code.gl-console-bg-cyan,
+  pre.gl-console.gl-console>code.gl-console-bg-cyan::before,
+  pre.gl-console.gl-console>code.gl-console-bg-cyan::after
+  { border-color: #00b0b0; }
+  pre.gl-console-bg-red, pre.gl-console>code>span.gl-console-bg-red,
+  pre.gl-console.gl-console>code.gl-console-bg-red,
+  pre.gl-console.gl-console>code.gl-console-bg-red::before,
+  pre.gl-console.gl-console>code.gl-console-bg-red::after
+  { border-color: #ff0000; }
+  pre.gl-console-bg-magenta, pre.gl-console>code>span.gl-console-bg-magenta,
+  pre.gl-console.gl-console>code.gl-console-bg-magenta,
+  pre.gl-console.gl-console>code.gl-console-bg-magenta::before,
+  pre.gl-console.gl-console>code.gl-console-bg-magenta::after
+  { border-color: #c000c0; }
+  pre.gl-console-bg-yellow, pre.gl-console>code>span.gl-console-bg-yellow,
+  pre.gl-console.gl-console>code.gl-console-bg-yellow,
+  pre.gl-console.gl-console>code.gl-console-bg-yellow::before,
+  pre.gl-console.gl-console>code.gl-console-bg-yellow::after
+  { border-color: #daa520; }
+  pre.gl-console-bg-white, pre.gl-console>code>span.gl-console-bg-white,
+  pre.gl-console.gl-console>code.gl-console-bg-white,
+  pre.gl-console.gl-console>code.gl-console-bg-white::before,
+  pre.gl-console.gl-console>code.gl-console-bg-white::after
+  { border-color: #808080; }
+}

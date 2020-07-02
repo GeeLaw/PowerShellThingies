@@ -48,8 +48,8 @@ Param
 )
 Process
 {
-    $local:binExt = @('.png', '.dat');
-    $local:utf8woBomLfExt = @('.gitignore', '.md', '.ps1', '.psd1', '.psm1', '.cs', '.html');
+    $local:binExt = @('.png', '.dat', '.xlsx');
+    $local:utf8woBomLfExt = @('.gitignore', '.md', '.ps1', '.psd1', '.psm1', '.cs', '.html', '.css', '.json');
     $local:checker = {
         Push-Location -LiteralPath $PSScriptRoot;
         Try
