@@ -624,8 +624,8 @@ namespace GeeLaw.ConsoleCapture
 
         private static IEnumerable<string> GetInteractiveHtmlImpl(IEnumerable<object> vs)
         {
-            yield return "<!doctype html>\n<html><head>\n<meta charset=\"utf-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n<title>Console Log Inspector (Show-ConsoleLog)</title>\n<link href=\"";
-            yield return HtmlEncode(InteractiveStylesPath);
+            yield return "<!doctype html>\n<html><head>\n<meta charset=\"utf-8\" />\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n<title>Console Log Inspector (Show-ConsoleLog)</title>\n<link href=\"file:///";
+            yield return HtmlEncode(InteractiveStylesPath.Replace("\\", "/"));
             yield return "\" rel=\"stylesheet\" />\n</head><body>\n";
             int ctr = 0;
             string[] spaces = null;

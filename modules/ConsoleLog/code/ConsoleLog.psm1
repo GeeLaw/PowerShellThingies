@@ -98,7 +98,7 @@ Function Get-ConsoleLog
             }
             ElseIf ($Css -eq 'Link')
             {
-                $html = '<link href="' + [GeeLaw.ConsoleCapture.Helper]::StylesPath.Replace('&', '&amp;').Replace("'", '&#39;') + "`" rel=`"stylesheet`" />`n";
+                $html = '<link href="file:///' + [GeeLaw.ConsoleCapture.Helper]::StylesPath.Replace('\', '/').Replace('&', '&amp;').Replace("'", '&#39;') + "`" rel=`"stylesheet`" />`n";
             }
             $html += [GeeLaw.ConsoleCapture.HtmlCapturer]::Capture($Host, $IncludeThisLine, $TrailingSpace);
             Return $html;

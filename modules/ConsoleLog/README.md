@@ -1,4 +1,4 @@
-# Get-ConsoleLog
+# ConsoleLog
 
 This module lets you save the console buffer to an object or an HTML file. It has the following cmdlets:
 

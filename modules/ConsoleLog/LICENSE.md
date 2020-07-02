@@ -1,4 +1,4 @@
-# Get-ConsoleLog: MIT License
+# ConsoleLog: MIT License
 
 Copyright (c) 2020 by Gee Law
 
