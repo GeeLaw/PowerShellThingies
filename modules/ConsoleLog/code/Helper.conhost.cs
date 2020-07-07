@@ -479,7 +479,7 @@ namespace GeeLaw.ConsoleCapture
                     yield return Helper.ColorToName(fgDefault = console.Foreground);
                     yield return " gl-console-bg-";
                     yield return Helper.ColorToName(bgLine = bgDefault = console.Background);
-                    yield return "\" lang=\"console\" data-width=\"";
+                    yield return "\" data-width=\"";
                     yield return console.Width.ToString(CultureInfo.InvariantCulture);
                     yield return "\">\n";
                     continue;

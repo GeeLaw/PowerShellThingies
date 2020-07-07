@@ -1,74 +1,81 @@
-pre.gl-console { white-space: normal; word-break: break-all; }
+pre.gl-console
+{
+  white-space: normal;
+  word-break: break-all;
+  border-style: solid;
+  border-width: 1px;
+}
 pre.gl-console *
 {
   white-space: pre-wrap;
   word-break: break-all;
 }
-pre.gl-console, pre.gl-console *, pre.gl-console *::before, pre.gl-console *::after
+pre.gl-console, pre.gl-console *,
+pre.gl-console *::before, pre.gl-console *::after
 {
-  line-height: 1.2;
+  line-height: 1;
   font-family: 'Consolas', 'Menlo', 'Courier New', 'Courier',
     'Microsoft YaHei', 'PingFang SC', 'PingFangSC', monospace;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  -ms-high-contrast-adjust: none !important;
+  -ms-high-contrast-adjust: none;
 }
-pre.gl-console[data-width="80"] { width: 46em; width: 81ch; }
 pre.gl-console>code { display: block; }
 pre.gl-console>code>span { display: inline-block; }
 
 .gl-console-fg-black { color: #000000; }
-.gl-console-bg-black { background-color: #000000; }
+.gl-console-bg-black { background: #000000; }
 
 .gl-console-fg-darkblue { color: #000080; }
-.gl-console-bg-darkblue { background-color: #000080; }
+.gl-console-bg-darkblue { background: #000080; }
 
 .gl-console-fg-darkgreen { color: #008000; }
-.gl-console-bg-darkgreen { background-color: #008000; }
+.gl-console-bg-darkgreen { background: #008000; }
 
 .gl-console-fg-darkcyan { color: #008080; }
-.gl-console-bg-darkcyan { background-color: #008080; }
+.gl-console-bg-darkcyan { background: #008080; }
 
 .gl-console-fg-darkred { color: #800000; }
-.gl-console-bg-darkred { background-color: #800000; }
+.gl-console-bg-darkred { background: #800000; }
 
 .gl-console-fg-darkmagenta { color: #8b008b; }
-.gl-console-bg-darkmagenta { background-color: #8b008b; }
+.gl-console-bg-darkmagenta { background: #8b008b; }
 
 .gl-console-fg-darkyellow { color: #9b870c; }
-.gl-console-bg-darkyellow { background-color: #9b870c; }
+.gl-console-bg-darkyellow { background: #9b870c; }
 
 .gl-console-fg-gray { color: #c0c0c0; }
-.gl-console-bg-gray { background-color: #c0c0c0; }
+.gl-console-bg-gray { background: #c0c0c0; }
 
 .gl-console-fg-darkgray { color: #808080; }
-.gl-console-bg-darkgray { background-color: #808080; }
+.gl-console-bg-darkgray { background: #808080; }
 
 .gl-console-fg-blue { color: #0000ff; }
-.gl-console-bg-blue { background-color: #0000ff; }
+.gl-console-bg-blue { background: #0000ff; }
 
 .gl-console-fg-green { color: #00ff00; }
-.gl-console-bg-green { background-color: #00ff00; }
+.gl-console-bg-green { background: #00ff00; }
 
 .gl-console-fg-cyan { color: #00ffff; }
-.gl-console-bg-cyan { background-color: #00ffff; }
+.gl-console-bg-cyan { background: #00ffff; }
 
 .gl-console-fg-red { color: #ff0000; }
-.gl-console-bg-red { background-color: #ff0000; }
+.gl-console-bg-red { background: #ff0000; }
 
 .gl-console-fg-magenta { color: #ff00ff; }
-.gl-console-bg-magenta { background-color: #ff00ff; }
+.gl-console-bg-magenta { background: #ff00ff; }
 
 .gl-console-fg-yellow { color: #ffff00; }
-.gl-console-bg-yellow { background-color: #ffff00; }
+.gl-console-bg-yellow { background: #ffff00; }
 
 .gl-console-fg-white { color: #ffffff; }
-.gl-console-bg-white { background-color: #ffffff; }
+.gl-console-bg-white { background: #ffffff; }
 
 @media (min-resolution: 140dpi)
 {
-  pre[lang="console"], pre[lang="console"] *
+  pre.gl-console, pre.gl-console *,
+  pre.gl-console *::before, pre.gl-console *::after
   {
     font-family: 'Consolas', 'Menlo', 'Courier New', 'Courier',
     'DengXian', 'Microsoft YaHei', 'PingFang SC', 'PingFangSC', monospace;
@@ -77,9 +84,6 @@ pre.gl-console>code>span { display: inline-block; }
 
 @media print
 {
-  pre.gl-console, pre.gl-console * { line-height: 1; }
-  pre.gl-console[data-width="80"] { width: 82ch; }
-
   .gl-console-bg-black, .gl-console-bg-darkblue,
   .gl-console-bg-darkgreen, .gl-console-bg-darkcyan,
   .gl-console-bg-darkred, .gl-console-bg-darkmagenta,
@@ -88,9 +92,7 @@ pre.gl-console>code>span { display: inline-block; }
   .gl-console-bg-green, .gl-console-bg-cyan,
   .gl-console-bg-red, .gl-console-bg-magenta,
   .gl-console-bg-yellow, .gl-console-bg-white
-  {
-    background-color: transparent;
-  }
+  { background: transparent; }
   .gl-console-fg-gray { color: #606060; }
   .gl-console-fg-darkgray { color: #404040; }
   .gl-console-fg-green { color: #00b000; }
@@ -99,8 +101,7 @@ pre.gl-console>code>span { display: inline-block; }
   .gl-console-fg-yellow { color: #ff8c00; }
   .gl-console-fg-white { color: #000000; }
 
-  pre.gl-console
-  { border: 1px solid transparent; background-color: #ffffff; }
+  pre.gl-console { background: #ffffff; }
   pre.gl-console>code
   {
     padding: 0 1px;
@@ -109,9 +110,7 @@ pre.gl-console>code>span { display: inline-block; }
     border-right: 2px solid transparent;
   }
   pre.gl-console>code.gl-console-bg-none
-  {
-    padding: 3px 1px 1px 1px;
-  }
+  { padding: 3px 1px 1px 1px; }
   pre.gl-console>code>span { border-bottom: 1px dashed transparent; }
 
   pre.gl-console>code.gl-console-bg-change:not(.gl-console-bg-none)::before,
