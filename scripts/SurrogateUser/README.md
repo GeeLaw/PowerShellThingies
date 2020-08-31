@@ -38,3 +38,9 @@ Opens the environment variable editor. If no switch is supplied, the editor open
 ## `Open-ExplorerOptionsDialog`
 
 Opens the File Explorer Options dialog. The usage is very limited as it only opens the dialog in the identity of the currently running File Explorer process, **not** who launched the dialog.
+
+## `Install-LaunchPDF.ps1`
+
+Installs a small utility that decides which program PDF files should open (TeXworks if the PDF has a corresponding TEX file; Adobe Reader DC otherwise). This works only if Adobe Reader DC is installed **for the machine** and MiKTeX is installed (for the user or the machine).
+
+If Adobe Reader DC is installed on a per-user basis (not saying that it can at this moment), using this script might corrupt the file associations of Adobe Reader DC (use the installer to fix it if it so happens).
