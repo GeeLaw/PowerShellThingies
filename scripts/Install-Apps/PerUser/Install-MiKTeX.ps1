@@ -94,7 +94,7 @@ If ($Error.Count -ne 0)
 }
 
 Write-Verbose '    Prepare to fix Uninstall registry key.' -Verbose;
-$uninstKeyRegex = [regex]::new('^(Software\\Microsoft\\Windows.*?\\Uninstall\\.*?);UninstallString$', 'IgnoreCase');
+$uninstKeyRegex = [regex]::new('^(Software\\Microsoft\\Windows.*?\\Uninstall\\.*?);', 'IgnoreCase');
 $uninstLog = [System.IO.Path]::Combine($installFolder, 'miktex\config\uninst.log')
 $uninstKey = @(Get-Content $uninstLog -ErrorAction SilentlyContinue | ForEach-Object -Begin { $inhkcu = $False } -Process {
     If ([string]::IsNullOrWhiteSpace($_))
@@ -119,6 +119,7 @@ $uninstKey = @(Get-Content $uninstLog -ErrorAction SilentlyContinue | ForEach-Ob
         }
     }
 });
+$uninstKey = @($uninstKey.ToLowerInvariant() | Sort-Object | Get-Unique);
 If ($Error.Count -ne 0)
 {
     & $FailFast 'Failed to read uninst.log file.';
@@ -152,7 +153,10 @@ If ($Error.Count -ne 0)
 }
 
 Write-Verbose '    Removing LocalRepository value from registry (as if installed offline).' -Verbose;
-Remove-ItemProperty -Path 'HKCU:\Software\MiKTeX.org\MiKTeX\*\MPM' -Name 'LocalRepository' -Force;
+If ('localrepository' -in @((Get-Item -Path 'HKCU:\Software\MiKTeX.org\MiKTeX\*\MPM').GetValueNames()).ToLowerInvariant())
+{
+    Remove-ItemProperty -Path 'HKCU:\Software\MiKTeX.org\MiKTeX\*\MPM' -Name 'LocalRepository' -Force;
+}
 If ($Error.Count -ne 0)
 {
     & $FailFast 'Failed to remove LocalRepository value.';

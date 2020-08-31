@@ -11,7 +11,7 @@ If ($Error.Count -ne 0)
     Exit -1;
 }
 
-$uninstKeyRegex = [regex]::new('^(Software\\Microsoft\\Windows.*?\\Uninstall\\.*?);UninstallString$', 'IgnoreCase');
+$uninstKeyRegex = [regex]::new('^(Software\\Microsoft\\Windows.*?\\Uninstall\\.*?);', 'IgnoreCase');
 $uninstKey = @(Get-Content .\Programs\MiKTeX\miktex\config\uninst.log -ErrorAction SilentlyContinue | ForEach-Object -Begin { $inhkcu = $False } -Process {
     If ([string]::IsNullOrWhiteSpace($_))
     {

@@ -26,7 +26,7 @@ $uninstTarget = [System.IO.Path]::Combine($installFolder, 'Uninstall-MiKTeX.ps1'
 Copy-Item -LiteralPath $uninstAsset -Destination $uninstTarget -Force;
 
 Write-Verbose '    Prepare to fix Uninstall registry key.' -Verbose;
-$uninstKeyRegex = [regex]::new('^(Software\\Microsoft\\Windows.*?\\Uninstall\\.*?);UninstallString$', 'IgnoreCase');
+$uninstKeyRegex = [regex]::new('^(Software\\Microsoft\\Windows.*?\\Uninstall\\.*?);', 'IgnoreCase');
 $uninstLog = [System.IO.Path]::Combine($installFolder, 'miktex\config\uninst.log')
 $uninstKey = @(Get-Content $uninstLog -ErrorAction SilentlyContinue | ForEach-Object -Begin { $inhkcu = $False } -Process {
     If ([string]::IsNullOrWhiteSpace($_))
