@@ -47,7 +47,7 @@ Process
     {
         If (-not $Force)
         {
-            Write-Warning 'This will work only if you have installed Adobe Reader DC. Moreover, this is not fully tested or guaranteed to be future-compatible. Proceed at your own risk and undo the changes if necessary.' -WarningAction 'Inquire';
+            Write-Warning 'This will work only if you have installed Adobe Reader DC and "Enable PDF thumbnail previews in Windows Explorer" is checked in Edit | Preferences | General in Acrobat Reader DC. Moreover, this is not fully tested or guaranteed to be future-compatible. Proceed at your own risk and undo the changes if necessary.' -WarningAction 'Inquire';
         }
         New-Item -Path 'HKCU:\Software\Classes\.pdf\shellex\{BB2E617C-0920-11d1-9A0B-00C04FC2D6C1}' -Force -Value '{F9DB5320-233E-11D1-9F84-707F02C10627}' | Out-Null;
     }
