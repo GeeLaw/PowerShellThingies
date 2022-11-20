@@ -11,7 +11,7 @@ $Error.Clear();
 $FailFast = { & $FailFastTemplate 'https://miktex.org/download' ($args[0]) 'Please install MiKTeX yourself.'; };
 
 $localZip = [System.IO.Path]::Combine($ScratchDirectory, 'mtsetup.zip');
-$localExe = [System.IO.Path]::Combine($ScratchDirectory, 'miktexsetup.exe');
+$localExe = [System.IO.Path]::Combine($ScratchDirectory, 'miktexsetup_standalone.exe');
 Remove-Item -LiteralPath $localZip -Force -Recurse -ErrorAction Ignore;
 Remove-Item -LiteralPath $localExe -Force -Recurse -ErrorAction Ignore;
 
@@ -164,7 +164,7 @@ If ($Error.Count -ne 0)
 }
 
 Write-Verbose '    Installing cm-super package (better typesetting result).' -Verbose;
-mpm --install=cm-super | Out-Host;
+miktex packages install cm-super | Out-Host;
 
 Write-Verbose '    Computing size of installation.' -Verbose;
 $estimatedSize = 0;
