@@ -14,7 +14,8 @@
     5. Prompts the user to change the registration information;
     6. Interactively removes user-selected Microsoft Store apps from the system;
     7. Sets DWM inactive window colour.
-    8. Updates help content for PowerShell.
+    8. Disables undo/redo in File Explorer.
+    9. Updates help content for PowerShell.
 
     All steps can be turned off in advance with switches;
     in addition, step 2, 3, 4 and 5 can be cancelled on demand.
@@ -42,6 +43,9 @@
 
 .PARAMETER SetDwmInactiveColor
     Forces the user to choose a DWM inactive window title bar colour.
+
+.PARAMETER SetExplorerMaxUndoItems
+    Disables undo/redo in File Explorer.
 
 .PARAMETER UpdateHelp
     Updates help for PowerShell without confirmation.
@@ -254,6 +258,18 @@ Process
     {
         Set-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\DWM' -Name 'AccentColorInactive' -Value 0xff666666 -Type DWord;
         Write-Verbose 'Set inactive window title bar color to 0xff666666.';
+    }
+    Else
+    {
+        Write-Verbose 'Did not set inactive window title bar color.';
+    }
+    If ($SetExplorerMaxUndoItems -or $PSCmdlet.ShouldProcess('File Explorer undo', 'Disable'))
+    {
+        Set-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'MaxUndoItems' -Value 0x0 -Type DWord;
+        Set-ItemProperty -LiteralPath 'HKCU:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'MaxUndoItems' -Value 0x0 -Type DWord;
+        Set-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'MaxUndoItems' -Value 0x0 -Type DWord;
+        Set-ItemProperty -LiteralPath 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'MaxUndoItems' -Value 0x0 -Type DWord;
+        Write-Verbose 'Set MaxUndoItems to 0.';
     }
     Else
     {
