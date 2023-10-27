@@ -252,12 +252,12 @@ struct ClassFactory : public IClassFactory
     {
       return CLASS_E_NOAGGREGATION;
     }
-    PdfOpenTarget *target = (PdfOpenTarget *)std::malloc(sizeof(PdfOpenTarget));
-    if (!target)
+    void *storage = std::malloc(sizeof(PdfOpenTarget));
+    if (!storage)
     {
       return E_OUTOFMEMORY;
     }
-    new (target) PdfOpenTarget();
+    PdfOpenTarget *target = new (storage) PdfOpenTarget();
     HRESULT hr = target->QueryInterface(riid, ppv);
     target->Release();
     return hr;
