@@ -76,6 +76,16 @@ New-Item -Path "$regPath\SupportedTypes" -Force |
   Set-ItemProperty -Name '.pdf' -Value '' | Out-Null;
 Write-Verbose -Message 'Finished Applications registration.';
 
+$regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\App Paths\$ExeName";
+If (Test-Path $regPath)
+{
+  Write-Verbose -Message 'Removing old App Paths registration.';
+  Remove-Item $regPath -Force -Recurse;
+}
+New-Item -Path $regPath -Force -Value $ExeTarget |
+  Set-ItemProperty -Name 'DropTarget' -Value $CLSID | Out-Null;
+Write-Verbose -Message 'Finished App Paths registration.';
+
 $regPath = "HKCU:\Software\Classes\$ProgID";
 If (Test-Path $regPath)
 {

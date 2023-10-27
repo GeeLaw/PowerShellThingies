@@ -7,6 +7,7 @@ $ExeFolder = [System.IO.Path]::Combine(
     [System.Environment+SpecialFolder]::LocalApplicationData,
     [System.Environment+SpecialFolderOption]::Create),
   'Programs', 'launchpdf');
+$ExeName = 'launchpdf.exe';
 $ProgID = 'Acrobat.Document.DC';
 
 $regPath = "HKCU:\Software\Classes\$ProgID";
@@ -18,6 +19,17 @@ If (Test-Path $regPath)
 Else
 {
   Write-Verbose -Message 'ProgID registration not found.';
+}
+
+$regPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\App Paths\$ExeName";
+If (Test-Path $regPath)
+{
+  Remove-Item $regPath -Force -Recurse;
+  Write-Verbose -Message 'Removed App Paths registration.';
+}
+Else
+{
+  Write-Verbose -Message 'App Paths registration not found.';
 }
 
 $regPath = "HKCU:\Software\Classes\Applications\$ExeName";

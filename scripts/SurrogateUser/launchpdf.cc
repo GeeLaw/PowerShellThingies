@@ -296,7 +296,6 @@ HRESULT LaunchCOMServer()
     CLSCTX_LOCAL_SERVER, REGCLS_MULTIPLEUSE, &dwCookie);
 }
 
-/*** Fallback to command line. ***/
 bool IsCOMServer(LPCWSTR cmdline)
 {
   /* Skip leading whitespace. */
@@ -350,6 +349,8 @@ bool IsCOMServer(LPCWSTR cmdline)
   /* Check if we have reached the end. */
   return !*cmdline;
 }
+
+/*** Fallback to command line. ***/
 HRESULT OpenFilesFromCmdLine(PWSTR cmdline)
 {
   HRESULT hrReturn = S_OK, hr;
@@ -406,6 +407,7 @@ HRESULT OpenFilesFromCmdLine(PWSTR cmdline)
         {
           return hrReturn;
         }
+        ++cmdline;
         break;
       }
       /* The current argument continues. */
