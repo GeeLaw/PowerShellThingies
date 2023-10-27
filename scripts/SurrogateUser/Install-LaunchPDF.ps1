@@ -100,3 +100,11 @@ New-Item -Path "$regPath\shell\cleveropen\command" -Force `
 New-Item -Path "$regPath\shell\cleveropen\DropTarget" -Force |
   Set-ItemProperty -Name 'CLSID' -Value $CLSID | Out-Null;
 Write-Verbose -Message 'Finished ProgID registration.';
+
+$PInvoke = '[System.Runtime.InteropServices.DllImport("Shell32.dll")] public static extern void SHChangeNotify(int wEventId, uint uFlags, System.UIntPtr dwItem1, System.UIntPtr dwItem2);';
+$PInvokeNS = 'PInvoke_82EDE2663BF0435D9F9A21AE88AAEF6C';
+$PInvokeClass = 'Shell32';
+Add-Type -MemberDefinition $PInvoke -Namespace $PInvokeNS -Name $PInvokeClass -ErrorAction 'Ignore' | Out-Null;
+Write-Verbose 'Finished adding P/Invoke code.';
+[PInvoke_82EDE2663BF0435D9F9A21AE88AAEF6C.Shell32]::SHChangeNotify(0x8000000, 0x1000, [System.UIntPtr]::Zero, [System.UIntPtr]::Zero);
+Write-Verbose 'Finished calling SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST | SHCNF_FLUSH, NULL, NULL).';

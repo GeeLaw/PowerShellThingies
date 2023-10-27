@@ -69,3 +69,11 @@ Else
 {
   Write-Verbose -Message 'Executable folder not found.';
 }
+
+$PInvoke = '[System.Runtime.InteropServices.DllImport("Shell32.dll")] public static extern void SHChangeNotify(int wEventId, uint uFlags, System.UIntPtr dwItem1, System.UIntPtr dwItem2);';
+$PInvokeNS = 'PInvoke_82EDE2663BF0435D9F9A21AE88AAEF6C';
+$PInvokeClass = 'Shell32';
+Add-Type -MemberDefinition $PInvoke -Namespace $PInvokeNS -Name $PInvokeClass -ErrorAction 'Ignore' | Out-Null;
+Write-Verbose 'Finished adding P/Invoke code.';
+[PInvoke_82EDE2663BF0435D9F9A21AE88AAEF6C.Shell32]::SHChangeNotify(0x8000000, 0x1000, [System.UIntPtr]::Zero, [System.UIntPtr]::Zero);
+Write-Verbose 'Finished calling SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST | SHCNF_FLUSH, NULL, NULL).';
