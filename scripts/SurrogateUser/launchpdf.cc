@@ -89,8 +89,7 @@ void ChooseAssocClass(LPCWSTR file, SHELLEXECUTEINFOW *sei)
   ext[3] = 'x';
   if (PathFileExistsW(file2))
   {
-    sei->lpVerb = L"open";
-    sei->lpClass = L"MiKTeX.pdf.2.9";
+    sei->lpVerb = L"texworksopen";
   }
 }
 HRESULT OpenFile(LPCWSTR file, bool ddewait)

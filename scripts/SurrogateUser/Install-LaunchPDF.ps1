@@ -18,6 +18,16 @@ $ExeFolder = [System.IO.Path]::Combine(
 $ExeTarget = [System.IO.Path]::Combine($ExeFolder, 'launchpdf.exe');
 $ExeName = 'launchpdf.exe';
 $ProgID = 'Acrobat.Document.DC';
+# ^^^ We register to HKCU, so it'll be merged with
+# the real Acrobat.Document.DC (AFAIK, always in HKLM).
+
+$TexWorks = @(Get-Command -Name 'texworks' -Type 'Application' -All);
+If ($TexWorks.Count -ne 1 -or $TexWorks[0].Name -ne 'texworks.exe')
+{
+  Write-Error -Category 'NotEnabled' -ErrorId 'LaunchPDF.TexWorksNotResolved' -Message '"texworks" command is not resolved to an unambiguous executable --- run "Get-Command -Name texworks -Type Application -All" to see the list.';
+  Return;
+}
+$TexWorks = $TexWorks[0].Path;
 
 If (-not (Test-Path $ExeSource))
 {
@@ -99,6 +109,9 @@ New-Item -Path "$regPath\shell\cleveropen\command" -Force `
   -Value "`"$ExeTarget`" `"%1`"" | Out-Null;
 New-Item -Path "$regPath\shell\cleveropen\DropTarget" -Force |
   Set-ItemProperty -Name 'CLSID' -Value $CLSID | Out-Null;
+New-Item -Path "$regPath\shell\texworksopen" -Force -Value 'Open with Te&Xworks' | Out-Null;
+New-Item -Path "$regPath\shell\texworksopen\command" -Force `
+  -Value "`"$TexWorks`" `"%1`"" | Out-Null;
 Write-Verbose -Message 'Finished ProgID registration.';
 
 $PInvoke = '[System.Runtime.InteropServices.DllImport("Shell32.dll")] public static extern void SHChangeNotify(int wEventId, uint uFlags, System.UIntPtr dwItem1, System.UIntPtr dwItem2);';
